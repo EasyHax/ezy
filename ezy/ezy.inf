@@ -1,0 +1,57 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class = HIDClass
+ClassGuid = {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Provider=%ProviderName%
+DriverVer = 01/22/2023,17.44.22.430
+CatalogFile=ezy.cat
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1=%Disk_Description%,,,
+
+[SourceDisksFiles]
+ezy.sys = 1
+
+[Manufacturer]
+%MfgName%=ezhx,NTamd64
+
+[ezhx.NTamd64]
+%device_desc%=ezy.Dev, USB\VID_80EE&PID_0021
+
+[ezy.Dev.NT]
+CopyFiles=ezy.Files.Ext
+
+[ezy.Dev.NT.Services]
+AddService = ezy, 0x00000002, ezy.AddService
+
+[ezy.AddService]
+DisplayName    = %ezy.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\ezy.sys
+
+[ezy.Files.Ext]
+ezy.sys
+
+[ezy.Dev.NT.Wdf]
+KmdfService = ezy, ezy_wdfsect
+
+[ezy_wdfsect]
+KmdfLibraryVersion = 1.15
+
+;---------------------------------------------------------------;
+
+[Strings]
+ProviderName      = "ezhx"
+MfgName           = "easyhax"
+Disk_Description  = "ezy install disk"
+ezy.SvcDesc       = "ezy service"
+ClassName         = "USB"
+Switch.DeviceDesc = "ezy device"
+
+device_desc = "ezy mouse"
